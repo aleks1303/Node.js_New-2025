@@ -1,0 +1,52 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+     "rootDir": "./src",    // де буде весь код
+     "outDir": "./dist",    // де буде весь компільований код в js
+
+//    // Environment Settings
+//    // See also https://aka.ms/tsconfig/module
+    "module": "commonjs",    // стандартна версія модуля для js
+    "target": "ESNext",     // використовує найновішу версію TS
+    "moduleResolution": "node",  // TS використовує стратегію розширень node.js
+    "esModuleInterop": true,    // дозволяє використовувати (import from)
+    "allowSyntheticDefaultImports": true,    // імпортує модулі з інших модулів назвавши іншою назвою
+    "removeComments": true,      // видаляти коментарі після компіляції з js
+    "resolveJsonModule": true,   // за допомогою TS імпортує json файли та брати з них якісь змінні
+    "noUnusedLocals": true,  //  дає попередження якщо не використовується змінна в ТS
+    "skipLibCheck": true,   // ігнорує типізацію бібліотек які використовуються
+
+//    "types": [],
+    // For nodejs:
+    // "lib": ["esnext"],
+    // "types": ["node"],
+    // and npm install -D @types/node
+
+    // Other Outputs
+//    "sourceMap": true,
+//    "declaration": true,
+//    "declarationMap": true,
+
+    // Stricter Typechecking Options
+//    "noUncheckedIndexedAccess": true,
+//    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+//    "strict": true,
+//    "jsx": "react-jsx",
+//    "verbatimModuleSyntax": true,
+//    "isolatedModules": true,
+//    "noUncheckedSideEffectImports": true,
+//    "moduleDetection": "force",
+
+  }
+}
