@@ -1,38 +1,25 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import * as mongoose from "mongoose";
-import {userService} from "./services/user.service";
-import {IUserDTO} from "./interfaces/user.interface";
 import {config} from "./configs/config";
+import {apiRouter} from "./routers/api.router";
 
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
+app.use('/', apiRouter);
 
-app.get("/users", async (req: Request, res: Response) => {
-   const data = await userService.getAll()
-    res.json(data)
-})
-app.post("/users", async (req: Request, res: Response) => {
-    const user = req.body as IUserDTO
-    const data = await userService.create(user);
-    res.json(data)
-})
-app.get("/users/:id", async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const data = await userService.getById(id)
-    res.json(data)
-})
-
+const port = config.PORT;
+const mongoDb = config.MONGO_URI;
 const dbConnection = async () => {
     let dbCon = false;
 
     while (!dbCon) {
         try{
             console.log("Connection to DB...");
-            console.log("Mongo URI:", config.MONGO_URI);
-            await mongoose.connect(config.MONGO_URI)
+
+            await mongoose.connect(mongoDb)
             dbCon = true;
             console.log('Database available!!!')
         }catch (e){
@@ -41,7 +28,7 @@ const dbConnection = async () => {
         }
     }
 }
-const port = config.PORT
+
 const start = async () => {
     try {
         await dbConnection()

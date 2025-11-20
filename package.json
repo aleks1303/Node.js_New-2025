@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "rimraf dist && tsc-watch --onSuccess \"npm run watch-server\"",
-    "watch-server": "ts-node src/main.ts --watch"
+    "start": "rimraf dist && tsc-watch --onSuccess \"npm run watch:server\"",
+    "watch:server": "ts-node src/main.ts --watch"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
