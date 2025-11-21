@@ -7,8 +7,8 @@
 
 //    // Environment Settings
 //    // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",    // стандартна версія модуля для js
     "target": "ESNext",     // використовує найновішу версію TS
+    "module": "ESNext",    // стандартна версія модуля для js
     "moduleResolution": "node",  // TS використовує стратегію розширень node.js
     "esModuleInterop": true,    // дозволяє використовувати (import from)
     "allowSyntheticDefaultImports": true,    // імпортує модулі з інших модулів назвавши іншою назвою

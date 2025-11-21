@@ -5,31 +5,29 @@
   "type": "module",
   "scripts": {
     "start": "rimraf dist && tsc-watch --onSuccess \"npm run watch:server\"",
-    "watch:server": "ts-node src/main.ts --watch"
+    "watch:server": "tsx src/main.ts --watch"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mongoose": "^8.20.0"
+    "mongoose": "^8.20.0",
+    "joi": "^18.0.2"
   },
   "devDependencies": {
+    "typescript": "^5.9.3",
     "@types/express": "^5.0.5",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^24.10.1",
     "rimraf": "^6.1.0",
-    "ts-node": "^10.9.2",
     "tsc-watch": "^7.2.0",
-    "typescript": "^5.9.3",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "globals": "^16.5.0",
-    "typescript-eslint": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
-    "@eslint/js": "^9.39.1"
+    "@eslint/js": "^9.39.1",
+    "tsx": "^4.20.6"
 
   },
   "author": "",
