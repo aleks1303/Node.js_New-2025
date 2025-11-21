@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { StatusCodesEnum } from "../enums/status-codes.enum";
-import { IUserDTO } from "../interfaces/user.interface";
+import { IUserCreateDTO, IUserUpdateDTO } from "../interfaces/user.interface";
 import { userService } from "../services/user.service";
 
 class UserController {
@@ -11,7 +11,7 @@ class UserController {
     }
 
     public async create(req: Request, res: Response) {
-        const user = req.body as IUserDTO;
+        const user = req.body as IUserCreateDTO;
         const data = await userService.create(user);
         res.status(StatusCodesEnum.CREATED).json(data);
     }
@@ -24,14 +24,14 @@ class UserController {
 
     public async updateById(req: Request, res: Response) {
         const { id } = req.params;
-        const body = req.body as IUserDTO;
+        const body = req.body as IUserUpdateDTO;
         const data = await userService.updateById(id, body);
         res.status(StatusCodesEnum.OK).json(data);
     }
 
     public async delete(req: Request, res: Response) {
         const { id } = req.params;
-        await userService.delete(id);
+        await userService.deleteById(id);
         res.sendStatus(StatusCodesEnum.NO_CONTENT);
     }
 }
