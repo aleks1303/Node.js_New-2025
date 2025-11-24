@@ -1,5 +1,6 @@
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
+import { IAuth } from "../interfaces/auth.interface";
 import { ITokenPair } from "../interfaces/token.interface";
 import { IUser, IUserCreateDTO } from "../interfaces/user.interface";
 import { tokenRepository } from "../repositorie/token.repository";
@@ -24,7 +25,7 @@ class AuthService {
     }
 
     public async signIn(
-        dto: any,
+        dto: IAuth,
     ): Promise<{ user: IUser; tokens: ITokenPair }> {
         const user = await userRepository.getByEmail(dto.email);
         const isValidPassword = await passwordService.comparePassword(

@@ -7,11 +7,6 @@ import { UserValidator } from "../validators/user.validator";
 const router = Router();
 
 router.get("/", userController.getAll);
-router.post(
-    "/",
-    commonMiddleware.isBodyValid(UserValidator.create),
-    userController.create,
-);
 router.get("/:id", commonMiddleware.isIdValid("id"), userController.getById);
 router.put(
     "/:id",

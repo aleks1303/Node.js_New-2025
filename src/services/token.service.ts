@@ -5,6 +5,7 @@ import { config } from "../configs/config";
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
 import { ITokenPair, ITokenPayload } from "../interfaces/token.interface";
+import { tokenRepository } from "../repositorie/token.repository";
 
 class TokenService {
     public generateTokens(payload: ITokenPayload): ITokenPair {
@@ -43,6 +44,13 @@ class TokenService {
                 StatusCodesEnum.UNAUTHORIZED,
             );
         }
+    }
+
+    public async isTokenExist(accessToken: string): Promise<boolean> {
+        const tokenPromise = await tokenRepository.findByParams({
+            accessToken,
+        });
+        return !!tokenPromise;
     }
 }
 export const tokenService = new TokenService();
