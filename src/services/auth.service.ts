@@ -28,6 +28,12 @@ class AuthService {
         dto: IAuth,
     ): Promise<{ user: IUser; tokens: ITokenPair }> {
         const user = await userRepository.getByEmail(dto.email);
+        if (!user) {
+            throw new ApiError(
+                "Invalid email or password",
+                StatusCodesEnum.UNAUTHORIZED,
+            );
+        }
         const isValidPassword = await passwordService.comparePassword(
             dto.password,
             user.password,

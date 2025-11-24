@@ -1,18 +1,11 @@
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
-import {
-    IUser,
-    IUserCreateDTO,
-    IUserUpdateDTO,
-} from "../interfaces/user.interface";
+import { IUser, IUserUpdateDTO } from "../interfaces/user.interface";
 import { userRepository } from "../repositorie/user.repository";
 
 class UserService {
     public getAll(): Promise<IUser[]> {
         return userRepository.getAll();
-    }
-    public create(user: IUserCreateDTO): Promise<IUser> {
-        return userRepository.create(user);
     }
     public async getById(userId: string): Promise<IUser> {
         const user = await userRepository.getById(userId);
