@@ -9,8 +9,9 @@ export interface IToken extends IBase {
 }
 
 export interface ITokenPayload {
-    _userId: string;
+    userId: string;
     role: RoleEnum;
 }
 
 export type ITokenPair = Pick<IToken, "accessToken" | "refreshToken">;
+export type IRefresh = Pick<IToken, "refreshToken">;
