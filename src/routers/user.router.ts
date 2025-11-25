@@ -11,16 +11,28 @@ router.get("/", userController.getAll);
 router.get("/:id", commonMiddleware.isIdValid("id"), userController.getById);
 router.put(
     "/:id",
+    authMiddleware.checkAccessToken,
     commonMiddleware.isIdValid("id"),
     commonMiddleware.isBodyValid(UserValidator.update),
-    authMiddleware.checkAccessToken,
     userController.updateById,
 );
 router.delete(
     "/:id",
-    commonMiddleware.isIdValid("id"),
     authMiddleware.checkAccessToken,
-    userController.delete,
+    commonMiddleware.isIdValid("id"),
+    userController.deleteById,
+);
+router.patch(
+    "/:id/block",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    userController.blockUser,
+);
+router.patch(
+    "/:id/unblock",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    userController.unblockUser,
 );
 
 export const userRouter = router;
