@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 
 import { config } from "../configs/config";
+import { ActionTokenTypeEnum } from "../enums/action-token-type.enum";
 import { StatusCodesEnum } from "../enums/status-codes.enum";
+import { TokenTypeEnum } from "../enums/token-type.enum";
 import { ApiError } from "../errors/api.error";
 import { ITokenPair, ITokenPayload } from "../interfaces/token.interface";
 import { tokenRepository } from "../repositorie/token.repository";
@@ -20,16 +21,22 @@ class TokenService {
 
     public verifyToken(
         token: string,
-        type: "access" | "refresh",
+        type: TokenTypeEnum | ActionTokenTypeEnum,
     ): ITokenPayload {
         try {
             let secret: string;
             switch (type) {
-                case "access":
+                case TokenTypeEnum.ACCESS:
                     secret = config.JWT_ACCESS_SECRET;
                     break;
-                case "refresh":
+                case TokenTypeEnum.REFRESH:
                     secret = config.JWT_REFRESH_SECRET;
+                    break;
+                case ActionTokenTypeEnum.ACTIVATE:
+                    secret = config.JWT_ACTIVATE_SECRET;
+                    break;
+                case ActionTokenTypeEnum.RECOVERY:
+                    secret = config.JWT_RECOVERY_SECRET;
                     break;
                 default:
                     throw new ApiError(
@@ -39,16 +46,41 @@ class TokenService {
             }
             return jwt.verify(token, secret) as ITokenPayload;
         } catch (e) {
-            throw new ApiError(
-                "Token is not valid",
-                StatusCodesEnum.UNAUTHORIZED,
-            );
+            // throw new ApiError(
+            //     "Token is not valid",
+            //     StatusCodesEnum.UNAUTHORIZED,
+            // );
+            console.error("JWT ERROR:", e.message);
         }
+    }
+    public generateActionToken(
+        payload: ITokenPayload,
+        type: ActionTokenTypeEnum,
+    ) {
+        let secret: string;
+        let expiresIn: string;
+
+        switch (type) {
+            case ActionTokenTypeEnum.ACTIVATE:
+                secret = config.JWT_ACTIVATE_SECRET;
+                expiresIn = config.JWT_ACTIVATE_LIFETIME;
+                break;
+            case ActionTokenTypeEnum.RECOVERY:
+                secret = config.JWT_RECOVERY_SECRET;
+                expiresIn = config.JWT_RECOVERY_LIFETIME;
+                break;
+            default:
+                throw new ApiError(
+                    "Token type is not valid",
+                    StatusCodesEnum.BAD_REQUEST,
+                );
+        }
+        return jwt.sign(payload, secret, { expiresIn } as SignOptions);
     }
 
     public async isTokenExist(
         token: string,
-        type: "accessToken" | "refreshToken",
+        type: TokenTypeEnum,
     ): Promise<boolean> {
         const tokenPromise = await tokenRepository.findByParams({
             [type]: token,

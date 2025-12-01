@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { StatusCodesEnum } from "../enums/status-codes.enum";
+import { TokenTypeEnum } from "../enums/token-type.enum";
 import { ApiError } from "../errors/api.error";
 import { IRefresh, ITokenPayload } from "../interfaces/token.interface";
 import { tokenService } from "../services/token.service";
@@ -29,12 +30,14 @@ class AuthMiddleware {
             }
             const tokenPayload = tokenService.verifyToken(
                 accessToken,
-                "access",
+                TokenTypeEnum.ACCESS,
             );
+            console.log(tokenPayload);
             const isTokenExist = await tokenService.isTokenExist(
                 accessToken,
-                "accessToken",
+                TokenTypeEnum.ACCESS,
             );
+            console.log(isTokenExist);
             if (!isTokenExist) {
                 throw new ApiError(
                     "Token is not valid",
@@ -70,11 +73,11 @@ class AuthMiddleware {
             }
             const tokenPayload = tokenService.verifyToken(
                 refreshToken,
-                "refresh",
+                TokenTypeEnum.REFRESH,
             );
             const isTokenExist = await tokenService.isTokenExist(
                 refreshToken,
-                "refreshToken",
+                TokenTypeEnum.REFRESH,
             );
             if (!isTokenExist) {
                 throw new ApiError(

@@ -1,6 +1,6 @@
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
-import { IUser, IUserUpdateDTO } from "../interfaces/user.interface";
+import { IUser } from "../interfaces/user.interface";
 import { userRepository } from "../repositorie/user.repository";
 
 class UserService {
@@ -16,7 +16,7 @@ class UserService {
     }
     public async updateById(
         userId: string,
-        user: IUserUpdateDTO,
+        user: Partial<IUser>,
     ): Promise<IUser> {
         const data = await userRepository.getById(userId);
         if (!data) {
@@ -24,6 +24,11 @@ class UserService {
         }
         return await userRepository.updateById(userId, user);
     }
+
+    public getByEmail(email: string): Promise<IUser> {
+        return userRepository.getByEmail(email);
+    }
+
     public async deleteById(userId: string): Promise<void> {
         const data = await userRepository.getById(userId);
         if (!data) {
