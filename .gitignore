@@ -2,3 +2,9 @@
 .idea
 node_modules
 dist
+
+/mongo.db/
+*.wt
+journal/
+storage/
+node_modules/
