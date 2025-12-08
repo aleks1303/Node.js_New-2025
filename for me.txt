@@ -1,2 +1,0 @@
-docker-compose down -v
-docker-compose up --build -d  // видалення та перезапуск контейнерів в docker
