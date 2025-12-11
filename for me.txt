@@ -1,3 +1,10 @@
-docker-compose down -v
+docker-compose down -v //Зачистити старі контейнери
 docker-compose up --build -d  // видалення та перезапуск контейнерів в docker
 docker compose up --build
+
+docker compose build --no-cache  // якщо помилка з'єднання
+docker pull node:20-alpine
+
+docker compose down -v   // після видалення mongo.db
+rm -rf mongo.db   //Видалити стару БД
+docker compose up --build  //запускаємо docker

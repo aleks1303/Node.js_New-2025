@@ -7,13 +7,13 @@ const App = () => {
     axios.get("/api/users").then(({data}) => setUsers(data))
   }, [])
     return (
-        <div style={{color: "white", bg: 'black'}}>
+        <div>
           <h1>Users</h1>
             {
-                users.map((user) => <div key={user._id}>{JSON.stringify(user)}</div>)
+                users.map(user => <div key={user._id}>{user.name} {user.surname}</div>)
             }
         </div>
     );
 };
 
-export default App;
+export { App };
