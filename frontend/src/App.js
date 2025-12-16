@@ -8,7 +8,7 @@ const App = () => {
   }, [])
     return (
         <div>
-          <h1>Users</h1>
+          <h1>Users: </h1>
             {
                 users.map(user => <div key={user._id}>{user.name} {user.surname}</div>)
             }

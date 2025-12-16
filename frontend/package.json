@@ -12,11 +12,23 @@
     "react-scripts": "5.0.1",
     "axios": "^1.13.2"
   },
+  "devDependencies": {
+    "npm-watch": "^0.13.0"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extentions": "js, css"
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "npm-watch"
   },
   "eslintConfig": {
     "extends": [
