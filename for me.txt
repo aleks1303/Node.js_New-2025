@@ -8,3 +8,20 @@ docker pull node:20-alpine
 docker compose down -v   // після видалення mongo.db
 rm -rf mongo.db   //Видалити стару БД
 docker compose up --build  //запускаємо docker
+
+
+
+"devDependencies": {
+    "npm-watch": "^0.13.0"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extentions": "js, css"
+    }
+  },
+  "watch": "npm-watch"
+
+  BUILD_PATH='../client'
