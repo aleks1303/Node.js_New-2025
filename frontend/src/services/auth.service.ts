@@ -1,0 +1,39 @@
+import { IAuth } from "../interfaces/auth.interface";
+import { IUser } from "../interfaces/user.interface";
+import { apiService } from "./api.service";
+import { urls } from "../constants/urls";
+import { ITokens } from "../interfaces/token.interface";
+import { IResponse } from "../types/response.type";
+
+const _accessToken = 'accessToken';
+const _refreshToken = '_refreshToken';
+const authService = {
+    register (user: IAuth): IResponse<IUser> {
+        return authService.register(user)
+    },
+    async login (user: IAuth): Promise<IUser>{
+        const {data} = await apiService.post<ITokens>(urls.auth.login, user);
+        this.setTokens(data)
+        const {data:me} = await this.me();
+        return me
+    },
+
+    setTokens({accessToken, refreshToken}: ITokens): void {
+        localStorage.setItem(_accessToken, accessToken)
+        localStorage.setItem(_refreshToken, refreshToken)
+    },
+    
+    me (): IResponse<IUser>{
+        return apiService.get(urls.auth.me);
+    },
+
+    getAccessToken (): string {
+        return localStorage.getItem(_accessToken) || '';
+    },
+
+    getRefreshToken (): string {
+        return localStorage.getItem(_refreshToken) || '';
+    }
+};
+
+export {authService}
