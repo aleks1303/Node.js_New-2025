@@ -1,10 +1,28 @@
 import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { IAuth } from "../interfaces/auth.interface";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { authActions } from "../redux/slices/auth.slice";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+    const {register, handleSubmit} = useForm<IAuth>();
+    const {error} = useAppSelector(state => state.auth);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const login: SubmitHandler<IAuth> = async (user) => {
+        const {meta: {requestStatus}} = await dispatch(authActions.login({user}))
+        if (requestStatus === 'fulfilled'){
+            navigate('/pizzas')
+        }
+    }
     return (
-        <div>
-            LoginPage
-        </div>
+        <form onSubmit={handleSubmit(login)}>
+            <input type="text" placeholder={'email'} {...register('email')} />
+            <input type="text" placeholder={'password'} {...register('password')} />
+            <button>Login</button>
+            {error && <div>Email or password incorrect </div>}
+        </form>
     );
 };
 

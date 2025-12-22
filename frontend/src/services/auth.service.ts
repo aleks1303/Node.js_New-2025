@@ -6,7 +6,7 @@ import { ITokens } from "../interfaces/token.interface";
 import { IResponse } from "../types/response.type";
 
 const _accessToken = 'accessToken';
-const _refreshToken = '_refreshToken';
+const _refreshToken = 'refreshToken';
 const authService = {
     register (user: IAuth): IResponse<IUser> {
         return authService.register(user)
@@ -18,7 +18,7 @@ const authService = {
         return me
     },
 
-    setTokens({accessToken, refreshToken}: ITokens): void {
+    setTokens({tokens: {accessToken, refreshToken}}: ITokens): void {
         localStorage.setItem(_accessToken, accessToken)
         localStorage.setItem(_refreshToken, refreshToken)
     },

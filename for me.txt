@@ -19,7 +19,7 @@ docker compose up --build  //запускаємо docker
       "patterns": [
         "src"
       ],
-      "extentions": "js, css"
+      "extentions": "js, ts, tsx, css"
     }
   },
   "watch": "npm-watch"
