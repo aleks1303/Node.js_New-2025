@@ -30,7 +30,7 @@
       "patterns": [
         "src"
       ],
-      "extensions": "ts, tsx, css"
+      "extentions": "ts, tsx, css"
     }
   },
   "scripts": {

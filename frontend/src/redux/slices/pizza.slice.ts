@@ -4,10 +4,12 @@ import { pizzaService } from "../../services/pizza.service";
 import { authActions } from "./auth.slice";
 
 interface IState {
-    pizzas: IPizza[]
+    pizzas: IPizza[],
+    trigger: boolean
 }
 const initialState: IState = {
-    pizzas: []
+    pizzas: [],
+    trigger:null
 }
 const getAll = createAsyncThunk<IPizza[], void>(
     "pizzaSlice/getAll",
@@ -20,19 +22,19 @@ const getAll = createAsyncThunk<IPizza[], void>(
         }
     }
 );
-// const create = createAsyncThunk<IPizza, {pizza: IPizza }>(
-//     "pizzaSlice/create",
-//     async ({pizza}, {rejectWithValue}) => {
-//         try {
-//             const { data } = await pizzaService.create(pizza);
-//             return data
-//         } catch (e) {
-//            return  rejectWithValue(e)
-//         }
-//     }
-// );
+const create = createAsyncThunk<IPizza, {pizza: IPizza }>(
+    "pizzaSlice/create",
+    async ({pizza}, {rejectWithValue}) => {
+        try {
+            const { data } = await pizzaService.create(pizza);
+            return data
+        } catch (e) {
+           return  rejectWithValue(e)
+        }
+    }
+);
 
-const slicePizza = createSlice({
+const pizzaSlice = createSlice({
     name: 'slicePizza',
     initialState,
     reducers: {},
@@ -41,12 +43,15 @@ const slicePizza = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.pizzas = action.payload
             })
+            .addCase(create.fulfilled, (state, action) => {
+                state.trigger = !state.trigger
+            })
 
 
 });
 
-const  {reducer: pizzaReducer, actions} = slicePizza;
+const  {reducer: pizzaReducer, actions} = pizzaSlice;
 
-const pizzaActions = { ...actions, getAll };
+const pizzaActions = { ...actions, getAll, create };
 
 export {pizzaReducer, pizzaActions}

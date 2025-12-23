@@ -1,9 +1,16 @@
-import React from "react";
-
-const Pizza = () => {
+import React, { FC } from "react";
+import { IPizza } from "../../interfaces/pizza.interface";
+interface IProps {
+    pizza: IPizza
+}
+const Pizza: FC<IProps> = ({pizza}) => {
+    const {name, price, diameter } = pizza
     return (
         <div>
-            Pizza
+            <div>name:{name}</div>
+            <div>price:{price}</div>
+            <div>diameter:{diameter}</div>
+            <hr/>
         </div>
     );
 };
