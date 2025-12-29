@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
+import path from "node:path";
 
 import { config } from "./configs/config";
 import { ApiError } from "./errors/api.error";
@@ -10,7 +11,7 @@ import { apiRouter } from "./routers/api.router";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/media', express.static(path.join(process.cwd(), "upload")));
 app.use("/", apiRouter);
 
 app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
