@@ -77,22 +77,16 @@ class UserController {
         }
     }
 
-    public async uploadAvatar (req: Request, res: Response, next: NextFunction) {
-        try{
-            const {id} = req.params;
-            const user = await userService.getById(id)
-            if (!user) {
-               throw new ApiError("User not found", StatusCodesEnum.NOT_FOUND);
-            }
-            if (!req.file) {
-                throw new ApiError("No file uploaded", StatusCodesEnum.BAD_REQUEST);
-            }
+    public async uploadAvatar(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { userId } = req.res.locals.tokenPayload as ITokenPayload;
 
-           const data =  await userService.updateById(id, {avatar: req.file.path});
-            res.status(StatusCodesEnum.OK).json(data)
-
-        } catch (e){
-            next(e)
+            const data = await userService.updateById(userId, {
+                avatar: req.file.path,
+            });
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
         }
     }
 }
