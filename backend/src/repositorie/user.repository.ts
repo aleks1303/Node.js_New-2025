@@ -1,9 +1,14 @@
-import { IUser, IUserCreateDTO } from "../interfaces/user.interface";
+import {
+    IUser,
+    IUserCreateDTO,
+    IUserQuery,
+} from "../interfaces/user.interface";
 import { User } from "../models/user.model";
 
 class UserRepository {
-    public getAll(): Promise<IUser[]> {
-        return User.find();
+    public getAll(query: IUserQuery): Promise<IUser[]> {
+        const skip = query.pageSize * (query.page - 1);
+        return User.find().limit(query.pageSize).skip(skip);
     }
     public create(user: IUserCreateDTO): Promise<IUser> {
         return User.create(user);
