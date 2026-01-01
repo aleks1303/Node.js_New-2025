@@ -50,17 +50,8 @@ class CommonMiddleware {
     public query(validator: ObjectSchema) {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
-                // req.query = await validator.validateAsync(req.query);
-                // next();
-                const validatedQuery = await validator.validateAsync(req.query);
-
-                // ВИПРАВЛЕННЯ: Оскільки req.query може бути лише для читання (getter only),
-                // ми не можемо написати req.query = validatedQuery.
-                // Замість цього ми очищуємо поточний об'єкт і копіюємо в нього валідовані дані.
-
-                Object.keys(req.query).forEach((key) => delete req.query[key]);
-                Object.assign(req.query, validatedQuery);
-
+                const query = await validator.validateAsync(req.query);
+                (req as any).validatedQuery = query;
                 next();
             } catch (e) {
                 next(new ApiError(e.details[0].message, 400));

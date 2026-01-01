@@ -6,9 +6,12 @@ import {
 import { User } from "../models/user.model";
 
 class UserRepository {
-    public getAll(query: IUserQuery): Promise<IUser[]> {
+    public getAll(query: IUserQuery): Promise<[IUser[], number]> {
         const skip = query.pageSize * (query.page - 1);
-        return User.find().limit(query.pageSize).skip(skip);
+        return Promise.all([
+            User.find().limit(query.pageSize).skip(skip),
+            User.countDocuments(),
+        ]);
     }
     public create(user: IUserCreateDTO): Promise<IUser> {
         return User.create(user);

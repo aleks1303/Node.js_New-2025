@@ -9,8 +9,11 @@ import { userService } from "../services/user.service";
 class UserController {
     public async getAll(req: Request, res: Response, next: NextFunction) {
         try {
-            const query = req.query as any as IUserQuery;
-            const data = await userService.getAll(query);
+            // const query = req.query as any as IUserQuery;
+            const { validatedQuery } = req as any as {
+                validatedQuery: IUserQuery;
+            };
+            const data = await userService.getAll(validatedQuery);
             res.status(StatusCodesEnum.OK).json(data);
         } catch (e) {
             next(e);
