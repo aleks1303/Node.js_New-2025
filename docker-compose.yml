@@ -8,11 +8,13 @@ services:
       - .env
     volumes:
       - ./backend:/app
-      - /app/node_modules
+#      - /app/node_modules
+      - node_modules:/app/node_modules
     restart: on-failure
     command: >
       sh -c "npm start"
-      
+
+
   db:
     image: mongo
     ports:
@@ -30,3 +32,6 @@ services:
     volumes:
       - ./client:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
+volumes:
+  node_modules:
