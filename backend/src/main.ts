@@ -1,17 +1,19 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import express, { NextFunction, Request, Response } from "express";
-import * as mongoose from "mongoose";
 import path from "node:path";
 
+import express, { NextFunction, Request, Response } from "express";
+import * as mongoose from "mongoose";
+
 import { config } from "./configs/config";
+import { cronRunner } from "./crons";
 import { ApiError } from "./errors/api.error";
 import { apiRouter } from "./routers/api.router";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/media', express.static(path.join(process.cwd(), "upload")));
+app.use("/media", express.static(path.join(process.cwd(), "upload")));
 app.use("/", apiRouter);
 
 app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
@@ -47,8 +49,9 @@ const dbConnection = async () => {
 const start = async () => {
     try {
         await dbConnection();
-        app.listen(port, () => {
+        app.listen(port, async () => {
             console.log(`Server listening on port ${port}`);
+            await cronRunner();
         });
     } catch (e) {
         console.log(e.message);
