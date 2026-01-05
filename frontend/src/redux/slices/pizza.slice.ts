@@ -1,17 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IPizza } from "../../interfaces/pizza.interface";
 import { pizzaService } from "../../services/pizza.service";
-import { authActions } from "./auth.slice";
+
+interface IPaginatedResponse<T> {
+    data: T[];
+    totalItems: number;
+    totalPages: number;
+    prevPage: boolean;
+    nextPage: boolean;
+}
 
 interface IState {
     pizzas: IPizza[],
-    trigger: boolean
+    totalItems: number;
+    totalPages: number;
+    trigger: boolean,
 }
 const initialState: IState = {
     pizzas: [],
-    trigger:null
+    totalItems: 0,
+    totalPages: 0,
+    trigger: false,
 }
-const getAll = createAsyncThunk<IPizza[], void>(
+const getAll = createAsyncThunk<IPaginatedResponse<IPizza>, void>(
     "pizzaSlice/getAll",
     async (_, {rejectWithValue}) => {
         try {
@@ -41,7 +52,9 @@ const pizzaSlice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                state.pizzas = action.payload
+                state.pizzas = action.payload.data;
+                state.totalItems = action.payload.totalItems;
+                state.totalPages = action.payload.totalPages;
             })
             .addCase(create.fulfilled, (state, action) => {
                 state.trigger = !state.trigger
