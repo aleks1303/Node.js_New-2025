@@ -5,8 +5,8 @@ docker compose up --build
 docker compose build --no-cache  // якщо помилка з'єднання
 docker pull node:20-alpine
 
-docker compose down -v   // після видалення mongo.db
 rm -rf mongo.db   //Видалити стару БД
+docker compose down -v   // після видалення mongo.db
 docker compose up --build  //запускаємо docker
 
 
