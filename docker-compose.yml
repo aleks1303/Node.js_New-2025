@@ -8,8 +8,8 @@ services:
       - .env
     volumes:
       - ./backend:/app
-#      - /app/node_modules
-      - node_modules:/app/node_modules
+      - /app/node_modules
+#      - node_modules:/app/node_modules
     restart: on-failure
     command: >
       sh -c "npm start"
