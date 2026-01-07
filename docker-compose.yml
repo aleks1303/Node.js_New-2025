@@ -32,3 +32,9 @@ services:
     volumes:
       - ./client:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
+#services:
+#  app:
+#    build: .
+#    ports:
+#      - "5000:5000"

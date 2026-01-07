@@ -5,11 +5,9 @@ MAINTAINER Some Dev
 RUN mkdir /app
 WORKDIR /app
 
-COPY ./backend/package.json ./
+COPY ./backend/package.json .
 
-RUN npm install
-
-CMD ["npm", "start"]
+RUN npm i
 
 
 
