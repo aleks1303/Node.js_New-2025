@@ -22,4 +22,8 @@ export const emailConstants: IEmailConstants<typeof EmailEnum> = {
         subject: "Recovery password",
         template: "recovery",
     },
+    [EmailEnum.SPAM]: {
+        subject: "Spam",
+        template: "spam",
+    },
 };
